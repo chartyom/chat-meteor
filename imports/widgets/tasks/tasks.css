@@ -1,0 +1,27 @@
+.widget-tasks ul {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+.widget-tasks li {
+  position: relative;
+  list-style: none;
+  padding: 15px;
+  border-bottom: #eee solid 1px;
+}
+.widget-tasks li .text {
+  margin-left: 10px;
+}
+.widget-tasks li.checked {
+  color: #888;
+}
+.widget-tasks li.checked .text {
+  text-decoration: line-through;
+}
+.widget-tasks li.private {
+  background: #eee;
+  border-color: #ddd;
+}
+.widget-tasks .hide-completed {
+  float: right;
+}

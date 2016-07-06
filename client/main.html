@@ -1,0 +1,15 @@
+<head>
+    <title>Application</title>
+</head>
+
+<body>
+{{> applicationLayout}}
+</body>
+
+<template name="applicationLayout">
+    {{> Template.dynamic template=header}}
+    {{> Template.dynamic template=main}}
+    {{> Template.dynamic template=footer}}
+    {{> Template.dynamic template=other}}
+</template>
+

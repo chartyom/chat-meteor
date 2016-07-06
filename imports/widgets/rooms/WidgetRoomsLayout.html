@@ -1,0 +1,21 @@
+<template name="WidgetRoomsLayout">
+    <div class="container widget-tasks">
+
+        <h1>My rooms list ({{roomsCount}})</h1>
+        <ul>
+          {{#each rooms}}
+            {{> WidgetRoomsRepeatLayout}}
+          {{/each}}
+        </ul>
+    </div>
+</template>
+
+
+<template name="WidgetRoomsRepeatLayout">
+    <li class="clearfix">
+        {{_id}}
+        {{#each users}}
+            {{_id}}
+        {{/each}}
+    </li>
+</template>

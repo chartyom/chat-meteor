@@ -1,0 +1,32 @@
+<template name="WidgetUsersLayout">
+    <div class="container widget-tasks">
+
+        <h1>Users List ({{usersCount}})</h1>
+        <ul>
+            {{#each users}}
+                {{> WidgetUsersRepeatLayout}}
+            {{/each}}
+        </ul>
+    </div>
+
+    {{> WidgetSendMessageModalLayout}}
+
+</template>
+
+
+<template name="WidgetUsersRepeatLayout">
+    <li class="clearfix">
+        {{username}}
+        {{profile.name}}
+        <div class="pull-right">
+
+            {{#if currentUser}}
+                {{#if isNotOwner}}
+                    <button type="button" class="write-message btn btn-primary">Отправить сообщение</button>
+                {{/if}}
+                <!--<button type="button" class="new-room btn btn-warning">New Room</button>-->
+            {{/if}}
+
+        </div>
+    </li>
+</template>
