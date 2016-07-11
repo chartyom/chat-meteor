@@ -53,3 +53,24 @@ FlowRouter.route('/rooms', {
         $('title').text('Rooms Page');
     }],
 });
+
+
+
+FlowRouter.route('/rooms/:roomId', {
+    name: 'RoomsMessagesPage',
+    action(params, queryParams) {
+        BlazeLayout.render( 'applicationLayout', {
+            header: 'HeaderLayout',
+            main: 'RoomsMessagesLayout'
+        });
+        console.log( "Action" );
+    },
+    subscriptions: function(params) {
+        /*Meteor.subscribe('rooms.messages', params.roomId);
+        console.log( "subscribe: "+params.roomId );*/
+    },
+    triggersEnter: [ function(){
+        $('title').text('Rooms Messages Page');
+    }],
+
+});

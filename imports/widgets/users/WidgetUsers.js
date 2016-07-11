@@ -4,7 +4,6 @@ import { Session } from 'meteor/session';
 /*import { ReactiveDict } from 'meteor/reactive-dict';*/
 
 import { Users } from '../../api/Users.js';
-import { Rooms } from '../../api/Rooms.js';
 
 import './users.css';
 import './WidgetUsersLayout.html';
@@ -36,10 +35,6 @@ Template.WidgetUsersRepeatLayout.helpers({
 });
 
 Template.WidgetUsersRepeatLayout.events({
-    'click .new-room'(event) {
-        const users = [this._id];
-        Meteor.call('rooms.insert', users);
-    },
     'click .write-message'(event) {
         Session.set("userForSendMessage", {
             userId: this._id,
