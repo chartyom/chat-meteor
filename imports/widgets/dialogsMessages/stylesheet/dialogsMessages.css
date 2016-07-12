@@ -1,0 +1,27 @@
+.widget-users ul {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+.widget-users li {
+  position: relative;
+  list-style: none;
+  padding: 15px;
+  border-bottom: #eee solid 1px;
+}
+.widget-users li .text {
+  margin-left: 10px;
+}
+.widget-users li.checked {
+  color: #888;
+}
+.widget-users li.checked .text {
+  text-decoration: line-through;
+}
+.widget-users li.private {
+  background: #eee;
+  border-color: #ddd;
+}
+.widget-users .hide-completed {
+  float: right;
+}
