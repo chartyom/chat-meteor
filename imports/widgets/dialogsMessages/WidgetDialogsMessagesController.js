@@ -1,38 +1,23 @@
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-
-
-export const Rooms = new Mongo.Collection('rooms');
-/*
- Collection rooms
- rooms => {
- _id: id,
- users: [userId1, userId2, ...],
- messages: [
- {_id: id, userId: userId1, text: "Hello", views: [
-    {userId: userId1, view: true}, {userId: userId2, view: false}, ...], createAt: date},
- ...,
- ],
- }
- */
+import { DialogsCollection as Dialogs } from '/imports/collections/DialogsCollection.js';
+import { MessagesCollection as Messages} from '/imports/collections/MessagesCollection.js';
 
 if (Meteor.isServer) {
 
-    Meteor.publish('rooms', function roomsPublication() {
-        return Rooms.find({users: this.userId}, {"messages.$": 1});
+    Meteor.publish('dialogs.list', function () {
+        return Dialogs.find({users: this.userId});
     });
 
-    Meteor.publish('rooms.messages', function roomsMessagesPublication(roomId) {
+    Meteor.publish('dialogs-messages.list', function (dialogId) {
         //check(roomId, String);
-        return Rooms.find({_id: roomId, users: this.userId});
+        return Messages.find({dialogId: dialogId});
     });
 
     Meteor.methods({
-        'message.insert'(text, roomId, users) {
+        'dialogs-messages.insert'(text, dialogId) {
             check(text, String);
-            check(roomId, String);
-            check(users, [String]);
+            check(dialogId, String);
 
             // пользователь авторизован
             if (!this.userId) {
@@ -41,8 +26,11 @@ if (Meteor.isServer) {
 
             var columns = [];
             var i = 0;
-
+            var users = Dialogs.findOne(dialogId).users;
             const userId = this.userId;
+            /*
+             * users => ["id1","id2",...]
+             */
             _.each(users, function (index, value) {
                 if (index != userId) {
                     columns[i] = {
@@ -53,22 +41,15 @@ if (Meteor.isServer) {
                 i++;
             });
 
-            const ObjectID = new Meteor.Collection.ObjectID();
-
-            Rooms.update({ _id: roomId},
-                {
-                    $push: {
-                        messages: {
-                            _id: ObjectID,
-                            text: text,
-                            userId: this.userId,
-                            createdAt: new Date(),
-                            views: columns
-                        }
-                    }
+            Messages.insert({
+                    dialogId: dialogId,
+                    text: text,
+                    userId: this.userId,
+                    createdAt: new Date(),
+                    views: columns
                 });
         },
-        'room-message.insert'(text, users) {
+        'dialogs.insert'(text, users) {
             check(text, String);
             check(users, [String]);
 
@@ -81,17 +62,18 @@ if (Meteor.isServer) {
             //Добавление к списку выбранных пользователей автора
             users.push(this.userId);
 
-            var usersRoom = '';
-            var roomId = 0;
+            var usersDialog = '';
+            var dialogId = '';
+
             if (users.length === 2) {
                 /*/!*Чат на 2*!/
-                /!*Проверка существования диалога*!/*/
+                 /!*Проверка существования диалога*!/*/
 
                 //Защита
                 // -комната на 2-х
                 // -в комнате присутствует текущий пользователь users[1]
                 // -в комнате присутствует собеседник users[0]
-                usersRoom = Rooms.findOne({
+                usersDialog = Dialogs.findOne({
                     $and: [
                         {
                             users: {
@@ -101,41 +83,46 @@ if (Meteor.isServer) {
                 });
             }
 
-            if (!usersRoom) {
-                //Комната не существует
-                roomId = Rooms.insert({
+            if (usersDialog === undefined) {
+                //Диалог не существует
+                dialogId = Dialogs.insert({
                     createdAt: new Date(),
                     users: users
                 }, function (err, result) {
                     return result;
                 });
-                usersRoom = {
+                usersDialog = {
                     users: users
                 }
             } else {
-                //Комната существует
-                roomId = usersRoom._id;
+                //Диалог существует
+                dialogId = usersDialog._id;
             }
 
-            var columns = {};
+            var columns = [];
             var i = 0;
-            $.each(usersRoom.users, function (index, value) {
-                if (value != this.userId) {
+            const userId = this.userId;
+
+            /*
+            * usersDialog.users => ["id1","id2",...]
+            */
+            _.each(usersDialog.users, function (index, value) {
+                if (index != userId) {
                     columns[i] = {
-                        userId: value,
+                        userId: index,
                         view: false
                     };
                 }
                 i++;
             });
 
-             /*Messages.insert({
-             roomId: roomId,
-             text: text,
-             userId: this.userId,
-             createdAt: new Date(),
-             views: columns,
-             });*/
+            Messages.insert({
+                dialogId: dialogId,
+                text: text,
+                userId: this.userId,
+                createdAt: new Date(),
+                views: columns,
+            });
         },
         'message.remove'(messageId) {
             check(messageId, String);
@@ -150,16 +137,16 @@ if (Meteor.isServer) {
             check(users, [String]);
 
             // Make sure the user is logged in before inserting a task
-            if (! this.userId) {
+            if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
 
             users.push(this.userId);
 
-            Rooms.insert({
+            /*Rooms.insert({
                 createdAt: new Date(),
                 users: users,
-            });
+            });*/
         },
         'rooms.remove'(roomId) {
             check(roomId, String);
@@ -168,10 +155,10 @@ if (Meteor.isServer) {
             if (!room) {
                 throw new Meteor.Error('not-authorized');
             }
-            Rooms.remove(roomId);
+            /*Rooms.remove(roomId);*/
         },
         'rooms.removeMe'(roomId) {
-            check(roomId, String);
+            /*check(roomId, String);
             //Защита
             const room = Rooms.findOne({_id: roomId, users: this.userId});
             if (!room) {
@@ -179,7 +166,7 @@ if (Meteor.isServer) {
             }
             const indexOfUser = room.users.indexOf(this.userId);
             const users = room.users.splice(indexOfUser, 1);
-            Rooms.update(roomId, { $set: { users: users } });
+            Rooms.update(roomId, {$set: {users: users}});*/
         },
     });
 

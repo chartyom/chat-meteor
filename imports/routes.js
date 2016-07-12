@@ -6,10 +6,6 @@ FlowRouter.route('/', {
             main: 'IndexLayout'
         });
     },
-    triggersEnter: [ function(){
-        console.log( "Index Page" );
-        $('title').text('Index Page');
-    }],
 });
 
 FlowRouter.route('/tasks', {
@@ -20,10 +16,6 @@ FlowRouter.route('/tasks', {
             main: 'TasksLayout'
         });
     },
-    triggersEnter: [ function(){
-        console.log( "Tasks Page" );
-        $('title').text('Tasks Page');
-    }],
 });
 
 FlowRouter.route('/users', {
@@ -34,43 +26,24 @@ FlowRouter.route('/users', {
             main: 'UsersLayout'
         });
     },
-    triggersEnter: [ function(){
-        console.log( "Users Page" );
-        $('title').text('Users Page');
-    }],
 });
 
-FlowRouter.route('/rooms', {
-    name: 'RoomsPage',
+FlowRouter.route('/dialogs', {
+    name: 'DialogsPage',
     action(params, queryParams) {
         BlazeLayout.render( 'applicationLayout', {
             header: 'HeaderLayout',
-            main: 'RoomsLayout'
+            main: 'DialogsLayout'
         });
     },
-    triggersEnter: [ function(){
-        console.log( "Rooms Page" );
-        $('title').text('Rooms Page');
-    }],
 });
 
-
-
-FlowRouter.route('/rooms/:roomId', {
-    name: 'RoomsMessagesPage',
+FlowRouter.route('/dialogs/:dialogId', {
+    name: 'DialogsMessagesPage',
     action(params, queryParams) {
         BlazeLayout.render( 'applicationLayout', {
             header: 'HeaderLayout',
-            main: 'RoomsMessagesLayout'
+            main: 'DialogsMessagesLayout'
         });
-        console.log( "Action" );
     },
-    subscriptions: function(params) {
-        /*Meteor.subscribe('rooms.messages', params.roomId);
-        console.log( "subscribe: "+params.roomId );*/
-    },
-    triggersEnter: [ function(){
-        $('title').text('Rooms Messages Page');
-    }],
-
 });

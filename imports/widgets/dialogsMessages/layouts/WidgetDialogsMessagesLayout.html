@@ -1,11 +1,9 @@
-<template name="WidgetRoomsMessagesLayout">
+<template name="WidgetDialogsMessagesLayout">
     <div class="widget-rooms-messages">
         <ul>
-            {{#with room}}
-                {{#each messages}}
-                    {{> WidgetRoomsMessagesRepeatLayout}}
-                {{/each}}
-            {{/with}}
+            {{#each messages}}
+                {{> WidgetDialogsMessagesRepeatLayout}}
+            {{/each}}
         </ul>
 
         <form class="send-message">
@@ -21,7 +19,7 @@
 </template>
 
 
-<template name="WidgetRoomsMessagesRepeatLayout">
+<template name="WidgetDialogsMessagesRepeatLayout">
     <li class="clearfix">
         <div>{{userId}}</div>
         <div>{{text}}</div>

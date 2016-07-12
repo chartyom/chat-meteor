@@ -1,0 +1,20 @@
+<template name="WidgetDialogsLayout">
+    <div class="widget-tasks">
+        <ul>
+          {{#each dialogs}}
+            {{> WidgetDialogsRepeatLayout}}
+          {{/each}}
+        </ul>
+        <div>My rooms list ({{dialogsCount}})</div>
+    </div>
+</template>
+
+
+<template name="WidgetDialogsRepeatLayout">
+    <li class="clearfix">
+        <a href="{{pathFor 'DialogsMessagesPage' dialogId=_id}}" title="{{_id}}" class="list-todo">{{_id}}</a>
+        {{#each users}}
+            {{_id}}
+        {{/each}}
+    </li>
+</template>

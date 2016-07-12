@@ -9,12 +9,17 @@
             <div class="modal-content">
                 <form class="send-message">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="sendMessageModalLabel">Отправка сообщения</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            {{user.username}}
+                            <ul>
+                                {{#each users}}
+                                    <li><span>{{username}}</span><button class="user-remove"> x</button></li>
+                                {{/each}}
+                            </ul>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Сообщение:</label>
@@ -30,3 +35,4 @@
         </div>
     </div>
 </template>
+

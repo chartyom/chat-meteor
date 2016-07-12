@@ -36,10 +36,7 @@ Template.WidgetUsersRepeatLayout.helpers({
 
 Template.WidgetUsersRepeatLayout.events({
     'click .write-message'(event) {
-        Session.set("userForSendMessage", {
-            userId: this._id,
-            username: this.username
-        });
+        Session.set("usersForSendMessage", [{userId: this._id, username: this.username}]);
         $('#sendMessageModal').modal('show');
     },
 });
