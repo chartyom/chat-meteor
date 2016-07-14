@@ -12,9 +12,7 @@
 
 <template name="WidgetDialogsRepeatLayout">
     <li class="clearfix">
-        <a href="{{pathFor 'DialogsMessagesPage' dialogId=_id}}" title="{{_id}}" class="list-todo">{{_id}}</a>
-        {{#each users}}
-            {{_id}}
-        {{/each}}
+        <a href="{{pathFor 'DialogsMessagesPage' dialogId=_id}}" title="{{username}}" class="list-todo">{{username}}</a>
+
     </li>
 </template>
