@@ -1,13 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { TasksCollection as Tasks } from '/imports/collections/Collections.js';
 
-import { Tasks } from '../../api/Tasks.js';
-
-import './tasks.css';
-import './WidgetTasksLayout.html';
+import './layouts/WidgetTasksLayout.html';
 
 Template.WidgetTasksLayout.onCreated(function(){
+    import './stylesheet/tasks.css';
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
 });

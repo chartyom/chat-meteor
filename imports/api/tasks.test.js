@@ -3,8 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import { assert } from 'meteor/practicalmeteor:chai';
-
-import { Tasks } from './Tasks.js';
+import {TasksCollection as Tasks} from '/imports/collections/Collections.js';
 
 if (Meteor.isServer) {
     describe('Tasks', () => {

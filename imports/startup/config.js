@@ -3,7 +3,7 @@ const Options = {
     separatorSiteName: ' - '
 };
 
-export const Settings = {
+export const Page = {
     setTitle: function(title){
         document.title = (title !== undefined) ? Options.siteName +
         Options.separatorSiteName +

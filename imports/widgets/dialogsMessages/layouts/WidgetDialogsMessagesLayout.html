@@ -1,29 +1,49 @@
 <template name="WidgetDialogsMessagesLayout">
-    <div class="widget-rooms-messages">
-        <ul>
-            {{#each messages}}
-                {{> WidgetDialogsMessagesRepeatLayout}}
-            {{/each}}
-        </ul>
+    {{#if Template.subscriptionsReady}}
+        <div class="widget-dsms">
+            <ul class="widget-dsms__list clearfix">
+                {{#each messages}}
+                    {{> WidgetDialogsMessagesRepeatLayout}}
+                {{/each}}
+            </ul>
 
-        <form class="send-message">
-            <div class="form-group">
-                <label for="message-text" class="control-label">Сообщение:</label>
-                <textarea class="form-control" name="text" id="message-text"></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
-    </div>
+            <form class="send-message">
+                <div class="form-group">
+                    <label for="message-text" class="control-label">Сообщение:</label>
+                    <textarea class="form-control" name="text" id="message-text"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </div>
+            </form>
+        </div>
+    {{else}}
+        <p>nothing to show</p>
+    {{/if}}
 </template>
 
 
 <template name="WidgetDialogsMessagesRepeatLayout">
-    <li class="clearfix">
-        <div>{{userId}}</div>
-        <div>{{text}}</div>
-        <div>{{createdAt}}</div>
-    </li>
+    {{#if isNotOwner}}
+        <li class="widget-dsms__list__item clearfix">
+            <div class="widget-dsms__item__container">
+                <div class="widget-dsms__item__container__left">
+                    <div class="widget-dsms__item__container__username">{{username}}</div>
+                </div>
+                <div class="widget-dsms__item__container__right">
+                    <div class="widget-dsms__item__container__text">{{text}}</div>
+                    <div class="widget-dsms__item__container__createdAt">{{localizedDateAndTime createdAt}}</div>
+                </div>
+            </div>
+        </li>
+    {{else}}
+        <li class="widget-dsms__list__item clearfix">
+            <div class="widget-dsms__item__container widget-dsms__item__container--owner">
+                <div class="widget-dsms__item__container__text">{{text}}</div>
+                <div class="widget-dsms__item__container__createdAt">{{localizedDateAndTime createdAt}}</div>
+            </div>
+        </li>
+    {{/if}}
+
 </template>
 

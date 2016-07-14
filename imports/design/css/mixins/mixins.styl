@@ -1,0 +1,17 @@
+border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+
+box-shadow()
+  -webkit-box-shadow arguments
+  -moz-box-shadow arguments
+  box-shadow arguments
+
+
+support-for-ie ?= true
+
+opacity(n)
+    opacity n
+    if support-for-ie
+      filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')

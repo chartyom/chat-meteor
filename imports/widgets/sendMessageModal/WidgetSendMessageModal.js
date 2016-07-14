@@ -2,11 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
+import './layouts/WidgetSendMessageModalLayout.html';
 
-import './WidgetSendMessageModalLayout.html';
-
-Template.WidgetSendMessageModalFormLayout.onCreated(function(){
-    import './sendMessageModal.css';
+Template.WidgetSendMessageModalLayout.onCreated(function(){
+    import './stylesheet/sendMessageModal.css';
 });
 
 Template.WidgetSendMessageModalFormLayout.helpers({
@@ -15,8 +14,7 @@ Template.WidgetSendMessageModalFormLayout.helpers({
          Session.get("userForSendMessage") =>
          [{username: "User", userId: "id"}]
          */
-
-        return Session.get("usersForSendMessage");
+        return Session.get("WidgetSendMessageModal");
     }
 });
 
@@ -32,7 +30,7 @@ Template.WidgetSendMessageModalFormLayout.events({
             throw new Meteor.Error('Введите сообщение');
         }
 
-        const users = Session.get("usersForSendMessage");
+        const users = Session.get("WidgetSendMessageModal");
         var columns = [];
         var i = 0;
         $.each(users, function (index, value) {
@@ -40,9 +38,9 @@ Template.WidgetSendMessageModalFormLayout.events({
             i++;
         });
         // Insert a task into the collection
-        Meteor.call('dialogs.insert', text,columns);
+        Meteor.call('Dialogs.insert', text,columns);
 
-        $('#sendMessageModal').modal('hide');
+        $('#WidgetSendMessageModal').modal('hide');
 
     },
     /*'click .user-remove'(event) {

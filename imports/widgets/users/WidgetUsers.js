@@ -1,15 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-/*import { ReactiveDict } from 'meteor/reactive-dict';*/
+import { UsersCollection as Users } from '/imports/collections/Collections.js';
 
-import { Users } from '../../api/Users.js';
-
-import './users.css';
-import './WidgetUsersLayout.html';
+import './layouts/WidgetUsersLayout.html';
 
 Template.WidgetUsersLayout.onCreated(function(){
-    Meteor.subscribe('users');
+    import './stylesheet/users.css';
+
+    var self = this;
+    self.autorun(function() {
+        self.subscribe('Users.list',0,10);
+    });
+
 });
 
 Template.WidgetUsersLayout.helpers({
@@ -36,7 +39,7 @@ Template.WidgetUsersRepeatLayout.helpers({
 
 Template.WidgetUsersRepeatLayout.events({
     'click .write-message'(event) {
-        Session.set("usersForSendMessage", [{userId: this._id, username: this.username}]);
-        $('#sendMessageModal').modal('show');
+        Session.set("WidgetSendMessageModal", [{userId: this._id, username: this.username}]);
+        $('#WidgetSendMessageModal').modal('show');
     },
 });
