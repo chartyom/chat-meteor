@@ -50,7 +50,7 @@ Template.WidgetDialogsMessagesLayout.events({
             return false;
         }
 
-        Meteor.call('WidgetDialogsMessages.insert', text, dialogId);
+        Meteor.call('DialogsMessages.insert', text, dialogId);
         // Clear form
         target.text.value = '';
     },
