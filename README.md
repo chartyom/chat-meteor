@@ -1,8 +1,9 @@
 # Test application on meteor js
-* index
-* tasks list
-* users list
-* rooms
+* index page
+* tasks list page
+* users list page
+* dialogs page
+* messages
 
 ## Используемые модули
 * `meteor-base` Packages every Meteor app needs to have
