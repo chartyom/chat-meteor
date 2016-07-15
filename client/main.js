@@ -15,4 +15,4 @@ import '/imports/widgets/sendMessageModal/WidgetSendMessageModal.js';
 import '/imports/widgets/dialogs/WidgetDialogs.js';
 import '/imports/widgets/dialogsMessages/WidgetDialogsMessages.js';
 
-import '/imports/lib/Routes.js';
+import '/imports/Routes.js';
