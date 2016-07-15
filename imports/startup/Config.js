@@ -1,4 +1,4 @@
-const Options = {
+export const Options = {
     siteName: 'App',
     separatorSiteName: ' - '
 };
