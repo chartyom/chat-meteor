@@ -1,4 +1,4 @@
-import {Options} from '/imports/startup/Config.js'
+import {Options} from '/imports/Config.js'
 
 export const Page = {
     setTitle: function(title){
