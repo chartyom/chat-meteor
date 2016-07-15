@@ -1,4 +1,4 @@
-# Test application on meteor js
+# Chat on meteor js
 * index page
 * tasks list page
 * users list page
