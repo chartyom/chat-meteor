@@ -1,46 +1,56 @@
 <template name="WidgetDialogsMessagesLayout">
-    {{#if Template.subscriptionsReady}}
-        <div class="widget-dsms">
-            <ul class="widget-dsms__list clearfix">
+    <div class="widget-dsmsl">
+        {{#if Template.subscriptionsReady}}
+            <ul class="widget-dsmsl__list clearfix">
                 {{#each messages}}
                     {{> WidgetDialogsMessagesRepeatLayout}}
                 {{/each}}
             </ul>
+        {{else}}
+            <div class="widget-dsmsl__content-loading">Loading...</div>
+        {{/if}}
+        <div class="widget-dsmsl__scroll--bottom"></div>
+        {{> WidgetDialogsMessagesFormLayout}}
+    </div>
+</template>
 
-            <form class="send-message">
-                <div class="form-group">
-                    <label for="message-text" class="control-label">Сообщение:</label>
-                    <textarea class="form-control" name="text" id="message-text"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Отправить</button>
-                </div>
-            </form>
+
+<template name="WidgetDialogsMessagesFormLayout">
+    <form class="send-message">
+        <div class="col-md-8 widget-dsmsl__send-message">
+            <div class="widget-dsmsl__send-message__button">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="widget-dsmsl__send-message__content">
+                <label for="message-text" class="control-label sr-only">Сообщение:</label>
+                <textarea class="widget-dsmsl__send-message__content__textarea form-control" name="text" placeholder="Введите сообщение" id="message-text"></textarea>
+            </div>
         </div>
-    {{else}}
-        <p>nothing to show</p>
-    {{/if}}
+    </form>
 </template>
 
 
 <template name="WidgetDialogsMessagesRepeatLayout">
     {{#if isNotOwner}}
-        <li class="widget-dsms__list__item clearfix">
-            <div class="widget-dsms__item__container">
-                <div class="widget-dsms__item__container__left">
-                    <div class="widget-dsms__item__container__username">{{username}}</div>
+        {{#if WidgetDialogsMessagesCheckRead views}}<div class="widget-dsmsl__scroll--not-read"></div> {{/if}}
+        <li class="widget-dsmsl__list__item {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}}clearfix">
+            <div class="widget-dsmsl__item__container">
+                <div class="widget-dsmsl__item__container__left">
+                    <div class="widget-dsmsl__item__container__username" title="{{username}}"><div>{{WidgetDialogsMessagesFirstLetterName username}}</div></div>
                 </div>
-                <div class="widget-dsms__item__container__right">
-                    <div class="widget-dsms__item__container__text">{{text}}</div>
-                    <div class="widget-dsms__item__container__createdAt">{{localizedDateAndTime createdAt}}</div>
+                <div class="widget-dsmsl__item__container__right">
+                    <div class="widget-dsmsl__item__container__text">{{text}}</div>
+                    <div class="widget-dsmsl__item__container__createdAt">{{WidgetDialogsMessagesDateAndTime createdAt}}</div>
                 </div>
             </div>
         </li>
     {{else}}
-        <li class="widget-dsms__list__item clearfix">
-            <div class="widget-dsms__item__container widget-dsms__item__container--owner">
-                <div class="widget-dsms__item__container__text">{{text}}</div>
-                <div class="widget-dsms__item__container__createdAt">{{localizedDateAndTime createdAt}}</div>
+        <li class="widget-dsmsl__list__item {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}} clearfix">
+            <div class="widget-dsmsl__item__container widget-dsmsl__item__container--owner">
+                <div class="widget-dsmsl__item__container__text">{{text}}</div>
+                <div class="widget-dsmsl__item__container__createdAt">{{WidgetDialogsMessagesDateAndTime createdAt}}</div>
             </div>
         </li>
     {{/if}}

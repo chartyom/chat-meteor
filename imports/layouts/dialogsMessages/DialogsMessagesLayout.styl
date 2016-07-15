@@ -1,0 +1,19 @@
+@import '../../design/css/mixins/mixins.styl'
+body.widgetDialogsMessages{
+  background: #e6eaec;
+}
+.body-container-dsmsl{
+  > div {
+    padding: 0
+  }
+  &__dialogs{
+    background #fff
+    bottom: 0;
+    top: 60px;
+    overflow-y: auto;
+    position: fixed;
+    padding: 0
+    z-index: 51
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+  }
+}

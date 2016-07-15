@@ -6,7 +6,7 @@ import { DialogsCollection as Dialogs, UsersCollection as Users } from '/imports
 import './layouts/WidgetDialogsLayout.html';
 
 Template.WidgetDialogsLayout.onCreated(function(){
-    import './stylesheet/dialogs.css';
+    import './stylesheet/WidgetDialogs.css';
 
     var self = this;
     self.autorun(function() {
@@ -18,6 +18,10 @@ Template.WidgetDialogsLayout.onCreated(function(){
 
 Template.WidgetDialogsLayout.onRendered(function(){
 
+});
+Template.registerHelper("WidgetDialogsFirstLetterName", function(username) {
+    if(username)
+        return username.charAt(0).toUpperCase()
 });
 
 Template.WidgetDialogsLayout.helpers({

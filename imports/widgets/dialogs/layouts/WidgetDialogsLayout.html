@@ -1,6 +1,6 @@
 <template name="WidgetDialogsLayout">
-    <div class="widget-tasks">
-        <ul>
+    <div class="widget-dsl">
+        <ul class="widget-dsl__list">
           {{#each dialogs}}
             {{> WidgetDialogsRepeatLayout}}
           {{/each}}
@@ -11,8 +11,14 @@
 
 
 <template name="WidgetDialogsRepeatLayout">
-    <li class="clearfix">
-        <a href="{{pathFor 'DialogsMessagesPage' dialogId=_id}}" title="{{username}}" class="list-todo">{{username}}</a>
-
+    <li class="widget-dsl__list__item widget-dsl__item">
+        <a href="{{pathFor 'DialogsMessagesPage' dialogId=_id}}" title="{{username}}" class="widget-dsl__item__link">
+            <div class="widget-dsl__item__link__left">
+                <div class="widget-dsl__item__link__user-picture"><div>{{WidgetDialogsFirstLetterName username}}</div></div>
+            </div>
+            <div class="widget-dsl__item__link__username">
+                {{username}}
+            </div>
+        </a>
     </li>
 </template>

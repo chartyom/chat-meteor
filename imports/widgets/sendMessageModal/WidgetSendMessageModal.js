@@ -5,7 +5,7 @@ import { Session } from 'meteor/session';
 import './layouts/WidgetSendMessageModalLayout.html';
 
 Template.WidgetSendMessageModalLayout.onCreated(function(){
-    import './stylesheet/sendMessageModal.css';
+    import './stylesheet/WidgetSendMessageModal.css';
 });
 
 Template.WidgetSendMessageModalFormLayout.helpers({

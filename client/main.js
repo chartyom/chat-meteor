@@ -1,10 +1,18 @@
-import '../imports/startup/accounts-config.js';
-import '../imports/layouts/Layouts.js';
+import '/imports/startup/Accounts-config.js';
 
-import '../imports/widgets/tasks/WidgetTasks.js';
-import '../imports/widgets/users/WidgetUsers.js';
-import '../imports/widgets/sendMessageModal/WidgetSendMessageModal.js';
-import '../imports/widgets/dialogs/WidgetDialogs.js';
-import '../imports/widgets/dialogsMessages/WidgetDialogsMessages.js';
+/*Layouts*/
+import '/imports/layouts/index/IndexLayout.js';
+import '/imports/layouts/tasks/TasksLayout.js';
+import '/imports/layouts/users/UsersLayout.js';
+import '/imports/layouts/dialogs/DialogsLayout.js';
+import '/imports/layouts/dialogsMessages/DialogsMessagesLayout.js';
 
-import '../imports/routes.js';
+/*Widgets*/
+import '/imports/widgets/headerNavbarMainTheme/HeaderNavbarMainTheme.js';
+import '/imports/widgets/tasks/WidgetTasks.js';
+import '/imports/widgets/users/WidgetUsers.js';
+import '/imports/widgets/sendMessageModal/WidgetSendMessageModal.js';
+import '/imports/widgets/dialogs/WidgetDialogs.js';
+import '/imports/widgets/dialogsMessages/WidgetDialogsMessages.js';
+
+import '/imports/lib/Routes.js';

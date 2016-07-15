@@ -6,7 +6,7 @@ import { TasksCollection as Tasks } from '/imports/collections/Collections.js';
 import './layouts/WidgetTasksLayout.html';
 
 Template.WidgetTasksLayout.onCreated(function(){
-    import './stylesheet/tasks.css';
+    import './stylesheet/WidgetTasks.css';
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
 });

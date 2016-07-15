@@ -6,7 +6,7 @@ import { UsersCollection as Users } from '/imports/collections/Collections.js';
 import './layouts/WidgetUsersLayout.html';
 
 Template.WidgetUsersLayout.onCreated(function(){
-    import './stylesheet/users.css';
+    import './stylesheet/WidgetUsers.css';
 
     var self = this;
     self.autorun(function() {
