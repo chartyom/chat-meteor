@@ -13,7 +13,7 @@ Template.WidgetDialogsLayout.onCreated(function(){
         self.subscribe('Users.all');
         self.subscribe('Dialogs.ByUser');
     });
-    console.log("onCreated");
+
 });
 
 Template.WidgetDialogsLayout.onRendered(function(){

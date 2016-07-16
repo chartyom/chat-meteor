@@ -64,8 +64,7 @@ if (Meteor.isServer) {
                 views: columns
             });
         },
-
-        'message.remove'(messageId) {
+        'DialogsMessages.remove'(messageId) {
             check(messageId, String);
             //Защита от удаления комнат, которые не принадлежат пользователю
             /*const message = Messages.findOne({_id: messageId, userId: this.userId});*/
@@ -74,40 +73,38 @@ if (Meteor.isServer) {
             }
             /* Messages.remove(messageId);*/
         },
-        'rooms.insert'(users) {
-            check(users, [String]);
+        'DialogsMessages.setView'(dialogId) {
+            check(dialogId, String);
 
-            // Make sure the user is logged in before inserting a task
+            //Защита
+            //Пользователь авторизован
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
 
-            users.push(this.userId);
+            var users = Dialogs.findOne({
+                _id: dialogId, users: this.userId
+            }, {
+                fields: {_id: 1}
+            });
 
-            /*Rooms.insert({
-             createdAt: new Date(),
-             users: users,
-             });*/
-        },
-        'rooms.remove'(roomId) {
-            check(roomId, String);
-            //Защита от удаления комнат, которые не принадлежат пользователю
-            const room = Rooms.findOne({_id: roomId, users: this.userId});
-            if (!room) {
-                throw new Meteor.Error('not-authorized');
+            //Защита
+            //В диалоге общаются участники диалога
+            if (users._id === undefined) {
+                throw new Meteor.Error('not-access');
             }
-            /*Rooms.remove(roomId);*/
-        },
-        'rooms.removeMe'(roomId) {
-            /*check(roomId, String);
-             //Защита
-             const room = Rooms.findOne({_id: roomId, users: this.userId});
-             if (!room) {
-             throw new Meteor.Error('not-authorized');
-             }
-             const indexOfUser = room.users.indexOf(this.userId);
-             const users = room.users.splice(indexOfUser, 1);
-             Rooms.update(roomId, {$set: {users: users}});*/
+
+            Messages.update({
+                    dialogId: dialogId,
+                    'views.userId': this.userId,
+                    'views.view': false
+                }, {
+                    $set: {
+                        'views.$.view': true
+                    }
+                },
+                {multi: true}
+            );
         },
     });
 

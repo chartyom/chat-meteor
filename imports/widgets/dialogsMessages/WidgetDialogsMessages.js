@@ -1,6 +1,25 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { MessagesCollection as Messages, UsersCollection as Users  } from '/imports/collections/Collections.js';
+import {Page} from '/imports/lib/PageEditor.js'
+
+/*
+ * 1.Привязка автоскролла к элементам
+ * .widget-dsmsl__scroll--not-read
+ * .widget-dsmsl__scroll--bottom
+ *
+ * 2.Проверка существования DOM элемента отвечающего за скроллинг
+ * 3.Временные переменные, для эффекта прочтения сообщений
+ *
+ */
+var WidgetDialogsOptions = {
+    peggingOnBottom: true,
+    peggingOnNotRead: true,
+    timers: {
+        timer1: null,
+        timer2: null
+    }
+};
 
 import './layouts/WidgetDialogsMessagesLayout.html';
 
@@ -12,6 +31,11 @@ Template.WidgetDialogsMessagesLayout.onCreated(function(){
     self.autorun(function() {
         const dialogId = FlowRouter.getParam('dialogId');
         self.subscribe('DialogsMessages.byDialogId', dialogId);
+
+        /*Обнуление привязки при переключении на новую страницу*/
+        WidgetDialogsOptions.peggingOnBottom = true;
+        WidgetDialogsOptions.peggingOnNotRead = true;
+
     });
 
     $('body').addClass('widgetDialogsMessages');
@@ -25,9 +49,7 @@ Template.registerHelper("WidgetDialogsMessagesCheckRead", function(obj) {
     if(obj){
         var result = false;
         $.map(obj, function(value, index) {
-            console.log(value);
             if(value && value.userId && (value.view === true || value.view === false) ) {
-                console.log(value.userId + ' ' + value.view);
                 if(value.userId === Meteor.userId){
                     if(value.view === true) {
                         return false;
@@ -80,7 +102,7 @@ Template.WidgetDialogsMessagesLayout.helpers({
     },
 });
 
-Template.WidgetDialogsMessagesLayout.events({
+Template.WidgetDialogsMessagesFormLayout.events({
     'submit .send-message'(event) {
         // Prevent default browser form submit
         event.preventDefault();
@@ -94,37 +116,61 @@ Template.WidgetDialogsMessagesLayout.events({
         }
 
         Meteor.call('DialogsMessages.insert', text, dialogId);
+
+        WidgetDialogsOptions.peggingOnBottom = true;
         // Clear form
         target.text.value = '';
+        target.text.focus();
     },
+    'keyup .send-message'(event) {
+        // Prevent default browser form submit
+        event.preventDefault();
+
+        if (event.keyCode === 13) {
+            const dialogId = FlowRouter.getParam('dialogId');
+            const target = event.target;
+            const text = target.value;
+            if(text.length === 0) {
+                alert('Error Length');
+                return false;
+            }
+            Meteor.call('DialogsMessages.insert', text, dialogId);
+
+            WidgetDialogsOptions.peggingOnBottom = true;
+            target.value = '';
+            target.focus();
+        }
+
+    }
 });
+
 
 
 Template.WidgetDialogsMessagesRepeatLayout.onRendered(function() {
 
-    var scrollTop = $(window).scrollTop();
-    var heightPage = $(document).height();
 
+    /*Привязка к непрочитанным сообщениям*/
     var scroll_el_1 = $('.widget-dsmsl__scroll--not-read');
-    var scroll_el_2 = $('.widget-dsmsl__scroll--bottom');
-    if (scroll_el_1.length != 0) { // проверим существование элемента чтобы избежать ошибки
+    if (scroll_el_1.length > 4) { // проверим существование элемента чтобы избежать ошибки
         $(window).scrollTop((scroll_el_1).offset().top - 80);
-    } else if (scroll_el_2.length != 0){
-        $(window).scrollTop((scroll_el_2).offset().top);
+        WidgetDialogsOptions.peggingOnNotRead=true;
+    } else {
+        WidgetDialogsOptions.peggingOnNotRead=false;
     }
-/*
 
-     var scrollTop = $(window).scrollTop();
+    if(!WidgetDialogsOptions.peggingOnNotRead){
+        /*Привязка к нижней части страницы*/
+        $(window).scroll(function(){
+            var scrollTop = $(window).scrollTop();
+            var scrollBottom = scrollTop + $(window).height();
+            var heightPage = $(document).height();
+            WidgetDialogsOptions.peggingOnBottom = (scrollBottom===heightPage);
+        });
 
-     var heightCondition = $(document).height() - $(window).height();
-
-     if(scrollTop >= heightCondition){
-        $(window).scrollTop(heightCondition);
-     }
-     console.log('pegging true sb=' + scrollTop + ' hc=' + heightCondition);
-*/
-
-    /*console.log('Complete: scroll at the bottom');*/
+        if(WidgetDialogsOptions.peggingOnBottom){
+            Page.scrollToElement($('.widget-dsmsl__scroll--bottom'));
+        }
+    }
 
 });
 
@@ -134,5 +180,18 @@ Template.WidgetDialogsMessagesRepeatLayout.helpers({
     },
     isNotOwner(){
         return this.userId !== Meteor.userId();
+    },
+    setView(){
+        Meteor.clearTimeout(WidgetDialogsOptions.timers.timer2);
+        Meteor.clearTimeout(WidgetDialogsOptions.timers.timer1);
+        WidgetDialogsOptions.timers.timer1 = Meteor.setTimeout(function(){
+            $('.widget-dsmsl__list__item--other')
+                .removeClass('widget-dsmsl__item--not-read');
+            WidgetDialogsOptions.timers.timer2 = Meteor.setTimeout(function(){
+                const dialogId = FlowRouter.getParam('dialogId');
+                Meteor.call('DialogsMessages.setView',dialogId);
+                console.log('I watched');
+            }, 500);
+        }, 1500);
     }
 });

@@ -34,8 +34,11 @@
 
 <template name="WidgetDialogsMessagesRepeatLayout">
     {{#if isNotOwner}}
-        {{#if WidgetDialogsMessagesCheckRead views}}<div class="widget-dsmsl__scroll--not-read"></div> {{/if}}
-        <li class="widget-dsmsl__list__item {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}}clearfix">
+        {{#if WidgetDialogsMessagesCheckRead views}}
+            <div class="widget-dsmsl__scroll--not-read"></div>
+            {{setView}}
+        {{/if}}
+        <li class="widget-dsmsl__list__item widget-dsmsl__list__item--other {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}}clearfix">
             <div class="widget-dsmsl__item__container">
                 <div class="widget-dsmsl__item__container__left">
                     <div class="widget-dsmsl__item__container__username" title="{{username}}"><div>{{WidgetDialogsMessagesFirstLetterName username}}</div></div>

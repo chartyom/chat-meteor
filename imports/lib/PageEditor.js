@@ -12,4 +12,14 @@ export const Page = {
     getTitle: function(){
         return document.title;
     },
+    scrollToElement: function(obj,callback){
+
+        if (obj.length != 0){
+            $(window).scrollTop((obj).offset().top);
+        }
+
+        if (callback && typeof(callback) === "function") {
+            callback();
+        }
+    }
 };
