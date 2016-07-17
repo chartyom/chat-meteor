@@ -8,8 +8,7 @@ import {Page} from '/imports/lib/PageEditor.js'
  * .widget-dsmsl__scroll--not-read
  * .widget-dsmsl__scroll--bottom
  *
- * 2.Проверка существования DOM элемента отвечающего за скроллинг
- * 3.Временные переменные, для эффекта прочтения сообщений
+ * 2.Временные переменные, для эффекта прочтения сообщений
  *
  */
 var WidgetDialogsOptions = {
@@ -43,36 +42,6 @@ Template.WidgetDialogsMessagesLayout.onCreated(function(){
 
 Template.WidgetDialogsMessagesLayout.onDestroyed(function(){
     $('body').removeClass('widgetDialogsMessages');
-});
-
-Template.registerHelper("WidgetDialogsMessagesCheckRead", function(obj) {
-    if(obj){
-        var result = false;
-        $.map(obj, function(value, index) {
-            if(value && value.userId && (value.view === true || value.view === false) ) {
-                if(value.userId === Meteor.userId){
-                    if(value.view === true) {
-                        return false;
-                    }
-                } else {
-                    if(value.view !== true) {
-                        result = true;
-                    }
-                }
-            }
-        });
-    }
-    return result;
-});
-
-Template.registerHelper("WidgetDialogsMessagesDateAndTime", function(date) {
-    if(date)
-        return moment(date).format('DD.MM.YYYY, HH:mm');
-});
-
-Template.registerHelper("WidgetDialogsMessagesFirstLetterName", function(username) {
-    if(username)
-        return username.charAt(0).toUpperCase()
 });
 
 Template.WidgetDialogsMessagesLayout.helpers({
@@ -193,5 +162,32 @@ Template.WidgetDialogsMessagesRepeatLayout.helpers({
                 console.log('I watched');
             }, 500);
         }, 1500);
+    },
+    firstLetterName(username) {
+        if(username)
+            return username.charAt(0).toUpperCase()
+    },
+    checkRead(obj){
+        if (obj) {
+            var result = false;
+            $.map(obj, function (value, index) {
+                if (value && value.userId && (value.view === true || value.view === false)) {
+                    if (value.userId === Meteor.userId) {
+                        if (value.view === true) {
+                            return false;
+                        }
+                    } else {
+                        if (value.view !== true) {
+                            result = true;
+                        }
+                    }
+                }
+            });
+        }
+        return result;
+    },
+    messageDateAndTime(date){
+        if(date)
+            return moment(date).format('DD.MM.YYYY, HH:mm');
     }
 });

@@ -19,10 +19,7 @@ Template.WidgetDialogsLayout.onCreated(function(){
 Template.WidgetDialogsLayout.onRendered(function(){
 
 });
-Template.registerHelper("WidgetDialogsFirstLetterName", function(username) {
-    if(username)
-        return username.charAt(0).toUpperCase()
-});
+
 
 Template.WidgetDialogsLayout.helpers({
     dialogs() {
@@ -39,5 +36,12 @@ Template.WidgetDialogsLayout.helpers({
     },
     dialogsCount() {
         return Dialogs.find({}).count();
+    },
+});
+
+Template.WidgetDialogsRepeatLayout.helpers({
+    firstLetterName(username) {
+        if(username)
+            return username.charAt(0).toUpperCase()
     },
 });

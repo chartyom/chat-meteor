@@ -34,26 +34,26 @@
 
 <template name="WidgetDialogsMessagesRepeatLayout">
     {{#if isNotOwner}}
-        {{#if WidgetDialogsMessagesCheckRead views}}
+        {{#if checkRead views}}
             <div class="widget-dsmsl__scroll--not-read"></div>
             {{setView}}
         {{/if}}
-        <li class="widget-dsmsl__list__item widget-dsmsl__list__item--other {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}}clearfix">
+        <li class="widget-dsmsl__list__item widget-dsmsl__list__item--other {{#if checkRead views}}widget-dsmsl__item--not-read {{/if}}clearfix">
             <div class="widget-dsmsl__item__container">
                 <div class="widget-dsmsl__item__container__left">
-                    <div class="widget-dsmsl__item__container__username" title="{{username}}"><div>{{WidgetDialogsMessagesFirstLetterName username}}</div></div>
+                    <div class="widget-dsmsl__item__container__username" title="{{username}}"><div>{{firstLetterName username}}</div></div>
                 </div>
                 <div class="widget-dsmsl__item__container__right">
                     <div class="widget-dsmsl__item__container__text">{{text}}</div>
-                    <div class="widget-dsmsl__item__container__createdAt">{{WidgetDialogsMessagesDateAndTime createdAt}}</div>
+                    <div class="widget-dsmsl__item__container__createdAt">{{messageDateAndTime createdAt}}</div>
                 </div>
             </div>
         </li>
     {{else}}
-        <li class="widget-dsmsl__list__item {{#if WidgetDialogsMessagesCheckRead views}}widget-dsmsl__item--not-read {{/if}} clearfix">
+        <li class="widget-dsmsl__list__item {{#if checkRead views}}widget-dsmsl__item--not-read {{/if}} clearfix">
             <div class="widget-dsmsl__item__container widget-dsmsl__item__container--owner">
                 <div class="widget-dsmsl__item__container__text">{{text}}</div>
-                <div class="widget-dsmsl__item__container__createdAt">{{WidgetDialogsMessagesDateAndTime createdAt}}</div>
+                <div class="widget-dsmsl__item__container__createdAt">{{messageDateAndTime createdAt}}</div>
             </div>
         </li>
     {{/if}}
