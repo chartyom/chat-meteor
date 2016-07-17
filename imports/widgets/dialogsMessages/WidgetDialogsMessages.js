@@ -116,8 +116,6 @@ Template.WidgetDialogsMessagesFormLayout.events({
 
 
 Template.WidgetDialogsMessagesRepeatLayout.onRendered(function() {
-
-
     /*Привязка к непрочитанным сообщениям*/
     var scroll_el_1 = $('.widget-dsmsl__scroll--not-read');
     if (scroll_el_1.length > 4) { // проверим существование элемента чтобы избежать ошибки
