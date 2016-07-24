@@ -21,6 +21,12 @@
                         <li><a href="{{pathFor 'DialogsPage'}}">Мои диалоги</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{{pathFor 'DialogsPage'}}">
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                                <span class="navbar-right__notify">{{MessagesNotRead}}</span>
+                            </a>
+                        </li>
                         {{> loginButtons}}
                     </ul>
                 </div>

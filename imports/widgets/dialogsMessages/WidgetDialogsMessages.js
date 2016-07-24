@@ -48,7 +48,7 @@ Template.WidgetDialogsMessagesLayout.helpers({
     messages() {
 
         const dialogId = FlowRouter.getParam('dialogId');
-        var query = Messages.find({dialogId:dialogId},{transform: function (doc) {
+        var query = Messages.find({dialogId:dialogId},{sort: {createdAt: 1},transform: function (doc) {
             var user = Users.findOne(doc.userId);
             if(user){
                 doc.username = user.username;
@@ -67,7 +67,7 @@ Template.WidgetDialogsMessagesLayout.helpers({
         return query;
     },
     setTitle(title){
-        Settings.setNewTitle(title);
+        Page.setNewTitle(title);
     },
 });
 

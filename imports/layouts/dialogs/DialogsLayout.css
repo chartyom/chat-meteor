@@ -5,7 +5,11 @@
   background: #fff;
   bottom: 0;
   top: 60px;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   padding: 0;
+  z-index: 51;
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.21);
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,0.21);
+  box-shadow: 0 0 10px rgba(0,0,0,0.21);
 }

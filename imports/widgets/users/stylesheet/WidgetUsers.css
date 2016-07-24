@@ -1,27 +1,39 @@
-.widget-users ul {
+.widget-usl__list {
   margin: 0;
   padding: 0;
-  background: #fff;
 }
-.widget-users li {
+.widget-usl__list__item {
   position: relative;
   list-style: none;
+}
+.widget-usl__item {
   padding: 15px;
   border-bottom: #eee solid 1px;
 }
-.widget-users li .text {
-  margin-left: 10px;
+.widget-usl__item__left {
+  float: left;
+  width: 60px;
 }
-.widget-users li.checked {
-  color: #888;
+.widget-usl__item__user-picture {
+  margin: 0 15px;
+  width: 40px;
+  height: 40px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.21);
+  -moz-box-shadow: 0 4px 5px rgba(0,0,0,0.21);
+  box-shadow: 0 4px 5px rgba(0,0,0,0.21);
+  color: #fff;
+  background: #6c6ac5;
 }
-.widget-users li.checked .text {
-  text-decoration: line-through;
+.widget-usl__item__user-picture > div {
+  text-align: center;
+  font-size: 20px;
+  line-height: 40px;
+  text-shadow: 1px 1px #5856af;
 }
-.widget-users li.private {
-  background: #eee;
-  border-color: #ddd;
-}
-.widget-users .hide-completed {
-  float: right;
+.widget-usl__item__username {
+  line-height: 40px;
+  margin: 0 0 0 75px;
 }

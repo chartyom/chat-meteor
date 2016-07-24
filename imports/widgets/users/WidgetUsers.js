@@ -35,7 +35,12 @@ Template.WidgetUsersRepeatLayout.helpers({
     isNotOwner() {
         return this._id !== Meteor.userId();
     },
+    firstLetterName(username) {
+        if (username)
+            return username.charAt(0).toUpperCase()
+    },
 });
+
 
 Template.WidgetUsersRepeatLayout.events({
     'click .write-message'(event) {
@@ -43,3 +48,4 @@ Template.WidgetUsersRepeatLayout.events({
         $('#WidgetSendMessageModal').modal('show');
     },
 });
+

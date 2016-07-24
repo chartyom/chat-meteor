@@ -34,7 +34,7 @@
   -moz-box-shadow: 0 4px 5px rgba(0,0,0,0.21);
   box-shadow: 0 4px 5px rgba(0,0,0,0.21);
   max-width: 500px;
-  padding: 15px;
+  padding: 10px 15px;
   margin: 0 40px 0 65px;
   min-width: 350px;
 }
@@ -71,7 +71,7 @@
   -moz-box-shadow: 0 4px 5px rgba(0,0,0,0.21);
   box-shadow: 0 4px 5px rgba(0,0,0,0.21);
   max-width: 500px;
-  padding: 15px;
+  padding: 10px 15px;
   margin-right: 15px;
   margin-left: 40px;
   min-width: 350px;

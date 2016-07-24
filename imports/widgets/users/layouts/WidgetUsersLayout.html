@@ -1,8 +1,8 @@
 <template name="WidgetUsersLayout">
-    <div class="container widget-tasks">
+    <div class="container widget-usl">
 
-        <h1>Users List ({{usersCount}})</h1>
-        <ul>
+        <h1>Пользователи ({{usersCount}})</h1>
+        <ul class="widget-usl__list">
             {{#each users}}
                 {{> WidgetUsersRepeatLayout}}
             {{/each}}
@@ -15,18 +15,19 @@
 
 
 <template name="WidgetUsersRepeatLayout">
-    <li class="clearfix">
-        {{username}}
-        {{profile.name}}
+    <li class="widget-usl__list__item widget-usl__item clearfix">
+        <div class="widget-usl__item__left">
+            <div class="widget-usl__item__user-picture">
+                <div>{{firstLetterName username}}</div>
+            </div>
+        </div>
         <div class="pull-right">
-
             {{#if currentUser}}
-
-                    <button type="button" class="write-message btn btn-primary">Отправить сообщение</button>
-
-                <!--<button type="button" class="new-room btn btn-warning">New Room</button>-->
+                <button type="button" class="write-message btn btn-primary">Отправить сообщение</button>
             {{/if}}
-
+        </div>
+        <div class="widget-usl__item__username">
+        {{username}}
         </div>
     </li>
 </template>

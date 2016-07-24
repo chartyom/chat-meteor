@@ -8,13 +8,19 @@ if (Meteor.isServer) {
         //check(roomId, String);
         const dialog = Dialogs.findOne({_id:dialogId,users: this.userId},{fields: {_id:1}});
         if(dialog._id !== undefined){
-            var messages = Messages.find({dialogId:dialogId});
-/*
-            messages.forEach(function(message) {
-                message.username = Users.findOne(message.userId).username;
-            });*/
-            return messages;
+            return Messages.find({dialogId:dialogId});
         }
+    });
+
+    Meteor.publish('DialogsMessages.countDialogsWithNewMessages', function () {
+
+        return Messages.find({
+            'views.userId': this.userId,
+            'views.view': false
+        },{
+            fields: {dialogId: 1,'views.userId':1,'views.view': 1}
+        });
+
     });
 
     Meteor.methods({
