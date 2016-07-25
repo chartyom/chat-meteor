@@ -27,3 +27,5 @@
 * `tomwasd:history-polyfill` polyfill ie8/9 HTML5 history
 * `arillo:flow-router-helpers` Использование ссылок в шаблонах 
 * `mrt:moment` время [Подробнее] (http://momentjs.com/docs/#/displaying/format/)
+* `murilobast:sound` позволяет использовать звуки на странице
+* 
