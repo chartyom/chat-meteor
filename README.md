@@ -5,6 +5,8 @@
 * dialogs page
 * messages
 
+![screenshot of sample](https://img-fotki.yandex.ru/get/28072/94553263.0/0_fb380_c8433d54_orig)
+
 ## Используемые модули
 * `meteor-base` Packages every Meteor app needs to have
 * `mobile-experience` Packages for a great mobile UX
@@ -28,4 +30,3 @@
 * `arillo:flow-router-helpers` Использование ссылок в шаблонах 
 * `mrt:moment` время [Подробнее] (http://momentjs.com/docs/#/displaying/format/)
 * `murilobast:sound` позволяет использовать звуки на странице
-* 
